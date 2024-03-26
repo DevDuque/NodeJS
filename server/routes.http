@@ -1,0 +1,12 @@
+# File to use the RestClient extension for test the HTTP Methods
+POST http://localhost:3333/notes
+Content-type: application/json
+
+{
+    "title": "Nota 01",
+    "description": "I'm the first one",
+    "start_At": "Tue, 26 Mar 2024 15:10:53 GMT",
+    "end_At": "Tue, 26 Mar 2024 15:10:53 GMT",
+    "priority": "High",
+    "createdAt": "Tue, 26 Mar 2024 15:10:53 GMT"
+}

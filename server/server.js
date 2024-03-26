@@ -4,9 +4,29 @@ import { DatabaseMemory } from './database-memory.js';
 
 const server = fastify();
 
+const database = new DatabaseMemory();
+
 // Create note route
-server.post('/notes', () => {
-    
+server.post('/notes', (request, reply) => {
+    // Get the values from the RequestBody
+    const {
+        title, 
+        description, 
+        start_At, 
+        end_At, 
+        priority } = request.body;
+
+    database.create({
+        title,
+        description,
+        start_At,
+        end_At,
+        priority,
+    });
+
+    console.log(database.list());
+
+    return reply.status(201).send();
 });
 
 // Read notes route

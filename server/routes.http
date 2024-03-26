@@ -10,3 +10,32 @@ Content-type: application/json
     "priority": "High",
     "createdAt": "Tue, 26 Mar 2024 15:10:53 GMT"
 }
+
+###
+GET http://localhost:3333/notes
+
+###
+PUT http://localhost:3333/notes/6d655023-f265-44ef-87fd-96a808cb67a
+Content-type: application/json
+
+{
+    "title": "Nota 01",
+    "description": "I'm the first one",
+    "start_At": "Tue, 26 Mar 2024 15:10:53 GMT",
+    "end_At": "Tue, 26 Mar 2024 15:10:53 GMT",
+    "priority": "High",
+    "createdAt": "Tue, 26 Mar 2024 15:10:53 GMT"
+}
+
+###
+DELETE http://localhost:3333/notes/9222f477-5873-4188-8f36-d65faa06b27e
+Content-type: application/json
+
+{
+    "title": "Nota 01",
+    "description": "I'm the first one",
+    "start_At": "Tue, 26 Mar 2024 15:10:53 GMT",
+    "end_At": "Tue, 26 Mar 2024 15:10:53 GMT",
+    "priority": "High",
+    "createdAt": "Tue, 26 Mar 2024 15:10:53 GMT"
+}

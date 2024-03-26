@@ -24,24 +24,47 @@ server.post('/notes', (request, reply) => {
         priority,
     });
 
-    console.log(database.list());
-
     return reply.status(201).send();
 });
 
 // Read notes route
 server.get('/notes', () => {
-    return 'Hello Fastify';
+    const notes = database.list();
+
+    return notes;
+    
 });
 
 // Update note route (Got a RouteParam)
-server.put('/notes/:id', () => {
-    return 'Hello Fastify';
+server.put('/notes/:id', (request, reply) => {
+    const noteID = request.params.id;
+
+    const {
+        title, 
+        description, 
+        start_At, 
+        end_At, 
+        priority } = request.body;
+
+    // Update the note by its ID
+    database.update(noteID, {
+        title, 
+        description,
+        start_At,
+        end_At,
+        priority
+    });
+
+    return reply.status(204).send();
 });
 
 // Delete note route (Got a RouteParam)
-server.delete('/notes/:id', () => {
-    
+server.delete('/notes/:id', (request, reply) => {
+    const noteID = request.params.id;
+
+    database.delete(noteID);
+
+    return reply.status(204).send();
 })
 
 // Return the port where the server is running

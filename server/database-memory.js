@@ -4,16 +4,26 @@ export class DatabaseMemory {
     // Using Map as a DataStructure -_-
     #notes = new Map();
 
-    // Read all notes
+    // Read all notes - Make the ID be part of the NoteObject
     list() {
-        return this.#notes.values();
+        return Array.from(this.#notes.entries()).map((noteArray) => {
+            const noteID = noteArray[0];
+            const data = noteArray[1];
+
+            return {
+                noteID,
+                ...data,
+            }
+        });
     }
 
-    // Create a note with a UUID
+    // Create a note with a UUID & Date
     create(note) {
         const noteID = randomUUID();
+        const createdAt = new Date();
 
-        this.#notes.set(noteID, note);
+        this.#notes.set(noteID, note, createdAt);
+
     }
 
     // Update a note with the UUID registered

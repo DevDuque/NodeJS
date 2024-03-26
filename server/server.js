@@ -74,5 +74,5 @@ server.delete('/notes/:id', async (request, reply) => {
 
 // Return the port where the server is running
 server.listen({
-    port: 3333,
+    port: process.env.PORT ?? 3333,
 });

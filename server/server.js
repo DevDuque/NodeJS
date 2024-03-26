@@ -1,13 +1,16 @@
 import { fastify } from 'fastify';
 
 import { DatabaseMemory } from './database-memory.js';
+import { DatabasePostgres } from './database-postgres.js';
 
 const server = fastify();
 
-const database = new DatabaseMemory();
+// const database = new DatabaseMemory();
+
+const database = new DatabasePostgres();
 
 // Create note route
-server.post('/notes', (request, reply) => {
+server.post('/notes', async(request, reply) => {
     // Get the values from the RequestBody
     const {
         title, 
@@ -16,7 +19,7 @@ server.post('/notes', (request, reply) => {
         end_At, 
         priority } = request.body;
 
-    database.create({
+    await database.create({
         title,
         description,
         start_At,
@@ -27,16 +30,18 @@ server.post('/notes', (request, reply) => {
     return reply.status(201).send();
 });
 
-// Read notes route
-server.get('/notes', () => {
-    const notes = database.list();
+// Read notes route (Got a QueryParam)
+server.get('/notes', async (request, reply) => {
+    const search = request.query.search;
+
+    const notes = await database.list(search);
 
     return notes;
     
 });
 
 // Update note route (Got a RouteParam)
-server.put('/notes/:id', (request, reply) => {
+server.put('/notes/:id', async (request, reply) => {
     const noteID = request.params.id;
 
     const {
@@ -47,7 +52,7 @@ server.put('/notes/:id', (request, reply) => {
         priority } = request.body;
 
     // Update the note by its ID
-    database.update(noteID, {
+    await database.update(noteID, {
         title, 
         description,
         start_At,
@@ -59,10 +64,10 @@ server.put('/notes/:id', (request, reply) => {
 });
 
 // Delete note route (Got a RouteParam)
-server.delete('/notes/:id', (request, reply) => {
+server.delete('/notes/:id', async (request, reply) => {
     const noteID = request.params.id;
 
-    database.delete(noteID);
+    await database.delete(noteID);
 
     return reply.status(204).send();
 })

@@ -4,8 +4,8 @@ export class DatabaseMemory {
     // Using Map as a DataStructure -_-
     #notes = new Map();
 
-    // Read all notes - Make the ID be part of the NoteObject
-    list() {
+    // Read all notes - Make the ID be part of the NoteObject and get a QueryParam
+    list(search) {
         return Array.from(this.#notes.entries()).map((noteArray) => {
             const noteID = noteArray[0];
             const data = noteArray[1];
@@ -14,6 +14,12 @@ export class DatabaseMemory {
                 noteID,
                 ...data,
             }
+        }).filter(note => {
+            if(search) {
+                return note.title.includes(search);
+            }
+
+            return true;
         });
     }
 
